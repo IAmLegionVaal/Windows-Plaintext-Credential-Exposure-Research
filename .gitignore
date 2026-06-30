@@ -1,0 +1,12 @@
+CredentialExposureReport/
+backups/
+*.dmp
+*.kirbi
+*.pfx
+*.p12
+*.key
+*.etl
+*.evtx
+*.zip
+.vscode/
+.idea/
