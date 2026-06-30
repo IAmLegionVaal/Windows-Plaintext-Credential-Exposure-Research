@@ -123,29 +123,17 @@ A timestamped JSON backup is created before registry-backed controls are changed
 | Credential Manager/network drive | Saved alternate credentials persist; active network logons can create reusable session state | Credential Guard reduces some LSASS theft paths but does not make saved credentials harmless | `DisableDomainCreds=1` where compatible, avoid alternate admin creds |
 | LSASS access | Attackers with high privilege attempt to read credential material | Credential Guard, LSA protection, and ASR reduce access | Enable VBS/CG, LSA protection, ASR, EDR, application control |
 
-## Carousel
+## Carousel walkthrough
 
-The supplied carousel is retained as visual context. The technical documentation corrects several common overgeneralizations and separates persistent credential storage from transient application or logon-session state.
+The original five-slide carousel supplied the following assessment scenarios. The repository expands each scenario into a technical control, detection, and validation chapter:
 
-### 1. RDP / MSTSC
-
-![RDP MSTSC plaintext credential exposure](assets/carousel/01-rdp-mstsc.webp)
-
-### 2. Service accounts
-
-![Service account credential exposure](assets/carousel/02-service-accounts.webp)
-
-### 3. WDigest
-
-![WDigest plaintext credential caching](assets/carousel/03-wdigest.webp)
-
-### 4. Default credential delegation
-
-![Default credential delegation](assets/carousel/04-default-credential-delegation.webp)
-
-### 5. Network drive and SSP state
-
-![Network drive alternate credential exposure](assets/carousel/05-network-drive-ssp.webp)
+| Slide | Scenario | Defensive takeaway | Detailed chapter |
+|---:|---|---|---|
+| 1 | RDP / MSTSC | Credential Guard does not wrap every application-owned credential buffer; use protected RDP modes and PAWs | [`docs/02-rdp-mstsc.md`](docs/02-rdp-mstsc.md) |
+| 2 | Service accounts | Reusable service passwords are an identity-design problem; migrate to gMSA or virtual accounts | [`docs/03-service-accounts.md`](docs/03-service-accounts.md) |
+| 3 | WDigest | Explicitly enforce `UseLogonCredential=0` and alert on attempts to enable it | [`docs/04-wdigest.md`](docs/04-wdigest.md) |
+| 4 | Default credential delegation | Remove broad and NTLM-only delegation; use Remote Credential Guard or Restricted Admin | [`docs/05-credential-delegation.md`](docs/05-credential-delegation.md) |
+| 5 | Network drive / SSP | Separate persistent Credential Manager entries from volatile authentication-session exposure | [`docs/06-credential-manager-network-drives.md`](docs/06-credential-manager-network-drives.md) |
 
 ## Key defensive conclusions
 
