@@ -1,0 +1,44 @@
+[
+  {
+    "Id": "WD-001",
+    "Category": "WDigest",
+    "Check": "Plaintext logon credential caching",
+    "Severity": "Critical",
+    "Status": "NonCompliant",
+    "CurrentValue": 1,
+    "ExpectedValue": "UseLogonCredential=0",
+    "Evidence": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\WDigest\\UseLogonCredential",
+    "Recommendation": "Disable WDigest plaintext caching and investigate the exposure window.",
+    "MITRE": "T1003.001",
+    "ComputerName": "LAB-CLNT01",
+    "CollectedAtUtc": "2026-06-30T09:00:00.0000000Z"
+  },
+  {
+    "Id": "CD-AllowDefCredentialsWhenNTLMOnly",
+    "Category": "Credentials Delegation",
+    "Check": "AllowDefCredentialsWhenNTLMOnly",
+    "Severity": "Critical",
+    "Status": "NonCompliant",
+    "CurrentValue": "Enabled=True; Targets=TERMSRV/*",
+    "ExpectedValue": "Disabled unless narrowly justified; no broad wildcards; avoid NTLM-only delegation",
+    "Evidence": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CredentialsDelegation",
+    "Recommendation": "Use Kerberos and Remote Credential Guard; remove wildcard targets.",
+    "MITRE": "T1021.001",
+    "ComputerName": "LAB-CLNT01",
+    "CollectedAtUtc": "2026-06-30T09:00:00.0000000Z"
+  },
+  {
+    "Id": "SVC-MSSQL$SQLEXPRESS",
+    "Category": "Service Accounts",
+    "Check": "SQL Server (SQLEXPRESS)",
+    "Severity": "High",
+    "Status": "NonCompliant",
+    "CurrentValue": "Identity=LAB\\SQLAdminSVC; Classification=OrdinaryDomainAccount; State=Running; StartMode=Auto",
+    "ExpectedValue": "Built-in, virtual, or managed service account with least privilege",
+    "Evidence": "Win32_Service Name=MSSQL$SQLEXPRESS",
+    "Recommendation": "Migrate to gMSA and remove privileged group membership.",
+    "MITRE": "T1543.003",
+    "ComputerName": "LAB-SRV01",
+    "CollectedAtUtc": "2026-06-30T09:00:00.0000000Z"
+  }
+]
